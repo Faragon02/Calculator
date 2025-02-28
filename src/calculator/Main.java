@@ -4,41 +4,13 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    static int add(int input1, int input2){
-        int result = 0;
-        return  result = input1 + input2;
-    }
 
-    static int subtract(int input1, int input2){
-        int result = 0;
-        return  result = input1 - input2;
-    }
-
-    static int multiply(int input1, int input2){
-        int result = 0;
-        return  result = input1*input2;
-    }
-
-    static int divide(int input1, int input2){
-        int result = 0;
-        try
-        {
-            result =input1 / input2;
-        }
-        catch (ArithmeticException e) {
-
-            System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다 ");
-            result =0;
-        }
-        finally {
-            return result = 0;
-        }
-    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Calculator calculator = new Calculator();
+
         int input1 = 0;
         int input2 = 0;
-        int result = 0;
 
         char operatorType;
         char[] operatorTypes = {'+','-','*','/'};
@@ -87,34 +59,37 @@ public class Main {
                     input2 = scanner.nextInt();
 
                 }
+                calculator.setDataInput(input1, operatorType, input2);
+                System.out.println("결과 :  " +calculator.getResult());
 
-                switch (operatorType)
+                System.out.println("입력한 데이터를 보겠습니까? y/n (Yes/N0)");
+                char tempCmd= scanner.next().charAt(0);
+                if(tempCmd == 'y' ||tempCmd =='Y')
                 {
-                    case '+':
-                        result = add(input1, input2);
-                        break;
-                    case '-':
-                        result = subtract(input1, input2);
-                        break;
-                    case '*':
-                        result = multiply(input1, input2);
-                        break;
-                    case '/':
-                        result = divide(input1, input2);
-                        break;
-                    default:
-                        break;
+                    System.out.println("입력1 : " + calculator.getinput1());
+                    System.out.println("입력2 : " + calculator.getinput2());
+                    System.out.println("결과 :  " +calculator.getResult());
                 }
+                System.out.println("입전 데이터를 보겠습니까? y/n (Yes/N0)");
+                char tempPreviousCmd1= scanner.next().charAt(0);
+                if(tempPreviousCmd1 == 'y' |tempPreviousCmd1 =='Y')
+                {
+                    System.out.println( String.format("총 개수는 %d개 이상이되면 오래된 것부터 삭제합니다.", calculator.previousMaxCount()));
+                    System.out.println("총 개수 : " + calculator.countPreviewData() + "\n\n");
+                    int countPrevious= calculator.countPreviewData();
+                    for(int i = 0; i< countPrevious; i++){
+                        System.out.println(calculator.callpreviousData(i));
 
-                System.out.println("결과 :  " + result);
+                    }
+                }
             }
             else
             {
                 System.out.println("존재하지 않는 기능입니다.");
             }
-            System.out.println("종료 할까요? 'exit' / 계속(p)");
-            String exit =scanner.next();
-            if (exit.equals("exit")) {
+            System.out.println("종료 할까요? 종료(q,Q) / 계속(p,P)");
+            char exit =scanner.next().charAt(0);
+            if (exit == 'q' ||exit == 'Q') {
                 System.out.println("프로그램 정상 종료");
                 start = false;
                 scanner.close();
