@@ -62,7 +62,7 @@ public class Calculator {
         }
         String tempNow = String.format("%d %c %d = %d", input1,operatorType, input2, result);
         previous.add(tempNow);
-        previousCount = previous.size();
+        countPreviewData();
     }
 
     int previousMaxCount() {
@@ -70,6 +70,8 @@ public class Calculator {
     }
     int countPreviewData()
     {
+        previousCount = previous.size();
+
        return previousCount;
     }
     String callpreviousData(int num)
@@ -87,7 +89,7 @@ public class Calculator {
     String removeData(int inputNum)
     {
         String complte;
-        if(inputNum>= 0 && inputNum < maxCount)
+        if(inputNum < maxCount)
         {
             previous.remove(inputNum);
             complte =  "삭제 :" + inputNum + " 번째 삭제 성공\n\n";

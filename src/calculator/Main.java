@@ -90,33 +90,33 @@ public class Main {
                         System.out.println( i + " 번째: " + calculator.callpreviousData(i));
                     }
                 }
-                if(countPrevious >= 2)
+
+               // System.out.println(calculator.removeData(selectInput) );
+                try
                 {
-                    try
-                    {
-                        System.out.println("삭제할 데이터 선택: 정수 숫자 / 없으면 -1");
-                        selectInput = scanner.nextInt();
-                    }
-                    catch (InputMismatchException ex)
-                    {
-                        System.out.println("재입력 해주세요.");
-                        scanner.nextLine();
-                        selectInput = scanner.nextInt();
-                    }
+                    System.out.println("삭제할 데이터 선택: 정수 숫자 / 없으면 -1");
+                    selectInput = scanner.nextInt();
+                }
+                catch (InputMismatchException ex)
+                {
+                    System.out.println("재입력 해주세요.");
+                    scanner.nextLine();
+                    selectInput = scanner.nextInt();
+                }
+
+                if( selectInput >=0)
+                {
+                    System.out.println(calculator.removeData(selectInput) );
 
                     countPrevious= calculator.countPreviewData();
-                    if( selectInput >=0)
+                    System.out.println("현재 상태" +  countPrevious);
+                    if(countPrevious >0)
                     {
-                        System.out.println(calculator.removeData(selectInput) );
-                        countPrevious= calculator.countPreviewData();
                         for(int i = 0; i< countPrevious; i++){
                             System.out.println( i + " 번째: " + calculator.callpreviousData(i));
                         }
-                    }
-                }
-                else
-                {
-                    System.out.println("갱신된 데이터가  2개 이상 일때 조회가 가능합니다.");
+
+                   }
                 }
             }
             else
