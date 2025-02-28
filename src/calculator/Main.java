@@ -12,6 +12,9 @@ public class Main {
         int input1 = 0;
         int input2 = 0;
 
+        int countPrevious;
+        int selectInput;
+
         char operatorType;
         char[] operatorTypes = {'+','-','*','/'};
 
@@ -33,6 +36,8 @@ public class Main {
             }
             if(calculateStatue)
             {
+
+
                 try
                 {
                     System.out.println("첫번째 정수를 입렵하세요.");
@@ -60,6 +65,9 @@ public class Main {
 
                 }
                 calculator.setDataInput(input1, operatorType, input2);
+
+                calculator.updatePreviewData();
+
                 System.out.println("결과 :  " +calculator.getResult());
 
                 System.out.println("입력한 데이터를 보겠습니까? y/n (Yes/N0)");
@@ -68,19 +76,47 @@ public class Main {
                 {
                     System.out.println("입력1 : " + calculator.getinput1());
                     System.out.println("입력2 : " + calculator.getinput2());
-                    System.out.println("결과 :  " +calculator.getResult());
+                    System.out.println("결과 :  " + calculator.getResult());
                 }
-                System.out.println("입전 데이터를 보겠습니까? y/n (Yes/N0)");
+                countPrevious= calculator.countPreviewData();
+                System.out.println("이전 데이터를 보겠습니까? y/n (Yes/N0)");
                 char tempPreviousCmd1= scanner.next().charAt(0);
                 if(tempPreviousCmd1 == 'y' |tempPreviousCmd1 =='Y')
                 {
-                    System.out.println( String.format("총 개수는 %d개 이상이되면 오래된 것부터 삭제합니다.", calculator.previousMaxCount()));
+                    System.out.println( String.format("총 개수는 %d개 이상이되면 오래된 것부터 자동 삭제합니다.", calculator.previousMaxCount()));
                     System.out.println("총 개수 : " + calculator.countPreviewData() + "\n\n");
-                    int countPrevious= calculator.countPreviewData();
-                    for(int i = 0; i< countPrevious; i++){
-                        System.out.println(calculator.callpreviousData(i));
 
+                    for(int i = 0; i< countPrevious; i++){
+                        System.out.println( i + " 번째: " + calculator.callpreviousData(i));
                     }
+                }
+                if(countPrevious >= 2)
+                {
+                    try
+                    {
+                        System.out.println("삭제할 데이터 선택: 정수 숫자 / 없으면 -1");
+                        selectInput = scanner.nextInt();
+                    }
+                    catch (InputMismatchException ex)
+                    {
+                        System.out.println("재입력 해주세요.");
+                        scanner.nextLine();
+                        selectInput = scanner.nextInt();
+                    }
+
+                    countPrevious= calculator.countPreviewData();
+                    if( selectInput >=0)
+                    {
+                        System.out.println(calculator.removeData(selectInput) );
+                        countPrevious= calculator.countPreviewData();
+                        for(int i = 0; i< countPrevious; i++){
+                            System.out.println( i + " 번째: " + calculator.callpreviousData(i));
+                        }
+                    }
+                }
+                else
+                {
+                    System.out.println("갱신된 데이터가  2개 이상 일때 조회가 가능합니다.");
                 }
             }
             else

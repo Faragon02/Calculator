@@ -1,8 +1,6 @@
 package calculator;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Calculator {
 
@@ -12,15 +10,18 @@ public class Calculator {
     char operatorType;
 
     //previewDatacheck
-    Map<Integer,String> previous ;
-    private int countObj;
-    private int maxCount = 2;
+    private  List<String> previous ;
+    private int maxCount;
+    private int previousCount;
+
+
     Calculator(){
         input1 = 0;
         input2 = 0;
         result = 0;
-        countObj = 0;
-        previous =new HashMap<>();
+        this.maxCount = 2;
+        previousCount = 0;
+        previous = new ArrayList<String>();
     }
 
     //setter & Calc!
@@ -48,26 +49,20 @@ public class Calculator {
                 break;
         }
 
-        updatePreviewData(); // this next when After Calc
+         // this next when After Calc
     }
 
 
     //previousDataCallFunction
     void updatePreviewData()
     {
-        String oldData = previous.get(0);
-        if(maxCount < previous.size())
+        if(previous.size() > maxCount)
         {
-
-            previous.remove(oldData);
-            for(int i =0 ; i < maxCount; i++)
-            {
-                previous.put(i , previous.remove(i));
-            }
-            countObj = previous.size();
+            previous.remove(0);
         }
         String tempNow = String.format("%d %c %d = %d", input1,operatorType, input2, result);
-        previous.put(countObj++, tempNow);
+        previous.add(tempNow);
+        previousCount = previous.size();
     }
 
     int previousMaxCount() {
@@ -75,16 +70,34 @@ public class Calculator {
     }
     int countPreviewData()
     {
-        int count = previous.size();
-        return count;
+       return previousCount;
     }
     String callpreviousData(int num)
     {
-        if(num > previous.size())
+        if(num >= previous.size())
         {
-            num = previous.size() -1;
+            num = previousCount;
+        }
+        else if(num < 0)
+        {
+            num = 0;
         }
         return previous.get(num);
+    }
+    String removeData(int inputNum)
+    {
+        String complte;
+        if(inputNum>= 0 && inputNum < maxCount)
+        {
+            previous.remove(inputNum);
+            complte =  "삭제 :" + inputNum + " 번째 삭제 성공\n\n";
+        }
+        else
+        {
+            complte ="삭제 :" +  inputNum + " 번째 삭제 실패\n "
+                    + maxCount + " 보다 크기 입력했습니다.\n\n";
+        }
+        return complte;
     }
     //getter
     int getinput1()
@@ -104,11 +117,11 @@ public class Calculator {
     }
 
     private void subtract(){
-          result = input1 - input2;
+        result = input1 - input2;
     }
 
     private void multiply(){
-          result = input1 * input2;
+        result = input1 * input2;
     }
 
     private void divide(){
@@ -122,6 +135,4 @@ public class Calculator {
             result =0;
         }
     }
-
-
 }
