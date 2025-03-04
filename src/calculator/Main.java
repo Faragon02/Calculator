@@ -5,15 +5,35 @@ import java.util.Scanner;
 
 public class Main {
 
+
+    static double check(String command, Scanner scanner)
+    {
+        double tempInput;
+        while (true)
+        {
+            try
+            {
+                System.out.println(command);
+                tempInput = scanner.nextDouble();
+                return  tempInput;
+            }
+            catch (InputMismatchException ex){
+                System.out.println("[Exception] 숫자를 입력하세요");
+                scanner.nextLine();
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
+
+
         Scanner scanner = new Scanner(System.in);
-        Calculator calculator = new Calculator();
+        Calculator<Double> calculator = new Calculator<>();
+        Previous previous = new Previous();
 
-        int input1 = 0;
-        int input2 = 0;
-
-        int countPrevious;
         int selectInput;
+        String command;
 
         char operatorType;
         char[] operatorTypes = {'+','-','*','/'};
@@ -31,66 +51,39 @@ public class Main {
                 if(operatorType == oper)
                 {
                     calculateStatue = true;
+                    calculator.setOperatorType(operatorType);
                     break;
                 }
             }
+            command = "첫번째 수를 입력하세요";
+            calculator.setInput1(check(command, scanner));
+
+            command = "두번째 수를 입력하세요";
+            calculator.setInput2(check(command, scanner));
             if(calculateStatue)
             {
+                System.out.println("결과 :  " + calculator.getReuslt());
+
+                previous.setUpdatePreviewData(calculator.getInput1(), calculator.getOperatorType(),
+                        calculator.getInput2(), calculator.getReuslt());
+
+                System.out.println("입력1 : " + calculator.getInput1());
+                System.out.println("입력2 : " + calculator.getInput2());
+                System.out.println("결과  :  " + calculator.getOnlyResult());
 
 
-                try
-                {
-                    System.out.println("첫번째 정수를 입렵하세요.");
-                    input1 = scanner.nextInt();
-
-                }
-                catch (InputMismatchException ex)
-                {
-                    System.out.println("다시 첫번째 정수를 입렵하세요.");
-                    scanner.nextLine();
-                    input1 = scanner.nextInt();
-                }
-
-                try
-                {
-                    System.out.println("두번째 정수를 입렵하세요.");
-                    input2 = scanner.nextInt();
-
-                }
-                catch (InputMismatchException ex)
-                {
-                    System.out.println("다시 두번째 정수를 입렵하세요.");
-                    scanner.nextLine();
-                    input2 = scanner.nextInt();
-
-                }
-                calculator.setDataInput(input1, operatorType, input2);
-
-                calculator.updatePreviewData();
-
-                System.out.println("결과 :  " +calculator.getResult());
-
-                System.out.println("입력한 데이터를 보겠습니까? y/n (Yes/N0)");
-                char tempCmd= scanner.next().charAt(0);
-                if(tempCmd == 'y' ||tempCmd =='Y')
-                {
-                    System.out.println("입력1 : " + calculator.getinput1());
-                    System.out.println("입력2 : " + calculator.getinput2());
-                    System.out.println("결과 :  " + calculator.getResult());
-                }
-                countPrevious= calculator.countPreviewData();
+                int countPrevious= previous.countPreviewData();
                 System.out.println("이전 데이터를 보겠습니까? y/n (Yes/N0)");
                 char tempPreviousCmd1= scanner.next().charAt(0);
                 if(tempPreviousCmd1 == 'y' |tempPreviousCmd1 =='Y')
                 {
-                    System.out.println( String.format("총 개수는 %d개 이상이되면 오래된 것부터 자동 삭제합니다.", calculator.previousMaxCount()));
-                    System.out.println("총 개수 : " + calculator.countPreviewData() + "\n\n");
+                    System.out.println( String.format("총 개수는 %d개 이상이되면 오래된 것부터 자동 삭제합니다.", previous.previousMaxCount()));
+                    System.out.println("총 개수 : " + previous.countPreviewData() + "\n\n");
 
                     for(int i = 0; i< countPrevious; i++){
-                        System.out.println( i + " 번째: " + calculator.callpreviousData(i));
+                        System.out.println( i + " 번째: " + previous.callpreviousData(i));
                     }
                 }
-
                // System.out.println(calculator.removeData(selectInput) );
                 try
                 {
@@ -104,18 +97,20 @@ public class Main {
                     selectInput = scanner.nextInt();
                 }
 
+                command = "수를 입력하세요 / 없으면 -1";
+                selectInput = (int)check(command, scanner);
+
                 if( selectInput >=0)
                 {
-                    System.out.println(calculator.removeData(selectInput) );
+                    System.out.println(previous.removeData(selectInput));
 
-                    countPrevious= calculator.countPreviewData();
+                    countPrevious= previous.countPreviewData();
                     System.out.println("현재 상태" +  countPrevious);
                     if(countPrevious >0)
                     {
                         for(int i = 0; i< countPrevious; i++){
-                            System.out.println( i + " 번째: " + calculator.callpreviousData(i));
+                            System.out.println( i + " 번째: " + previous.callpreviousData(i));
                         }
-
                    }
                 }
             }
