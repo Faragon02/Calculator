@@ -5,6 +5,24 @@ import java.util.Scanner;
 
 public class Main {
 
+    public  static int check(String command , Scanner scanner)
+    {
+        int tempInt;
+        while (true)
+        {
+            try
+            {
+                System.out.println(command);
+                tempInt = scanner.nextInt();
+                return tempInt;
+            }
+            catch (InputMismatchException ex)
+            {
+                System.out.println("[Error]수를 다시 입력하세요");
+                scanner.nextLine();
+            }
+        }
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Calculator calculator = new Calculator();
@@ -12,6 +30,8 @@ public class Main {
         int input1 = 0;
         int input2 = 0;
 
+
+        String command;
         int countPrevious;
         int selectInput;
 
@@ -34,50 +54,24 @@ public class Main {
                     break;
                 }
             }
+
+            command = "첫번째 정수를 입렵하세요.";
+            input1 = check(command, scanner);
+
+            command = " 두번째 정수를 입렵하세요.";
+            input2 = check(command, scanner);
+
             if(calculateStatue)
             {
 
-
-                try
-                {
-                    System.out.println("첫번째 정수를 입렵하세요.");
-                    input1 = scanner.nextInt();
-
-                }
-                catch (InputMismatchException ex)
-                {
-                    System.out.println("다시 첫번째 정수를 입렵하세요.");
-                    scanner.nextLine();
-                    input1 = scanner.nextInt();
-                }
-
-                try
-                {
-                    System.out.println("두번째 정수를 입렵하세요.");
-                    input2 = scanner.nextInt();
-
-                }
-                catch (InputMismatchException ex)
-                {
-                    System.out.println("다시 두번째 정수를 입렵하세요.");
-                    scanner.nextLine();
-                    input2 = scanner.nextInt();
-
-                }
                 calculator.setDataInput(input1, operatorType, input2);
 
                 calculator.updatePreviewData();
 
                 System.out.println("결과 :  " +calculator.getResult());
-
-                System.out.println("입력한 데이터를 보겠습니까? y/n (Yes/N0)");
-                char tempCmd= scanner.next().charAt(0);
-                if(tempCmd == 'y' ||tempCmd =='Y')
-                {
-                    System.out.println("입력1 : " + calculator.getinput1());
-                    System.out.println("입력2 : " + calculator.getinput2());
-                    System.out.println("결과 :  " + calculator.getResult());
-                }
+                System.out.println("입력1 : " + calculator.getinput1());
+                System.out.println("입력2 : " + calculator.getinput2());
+                System.out.println("결과 :  " + calculator.getResult());
                 countPrevious= calculator.countPreviewData();
                 System.out.println("이전 데이터를 보겠습니까? y/n (Yes/N0)");
                 char tempPreviousCmd1= scanner.next().charAt(0);
