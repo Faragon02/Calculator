@@ -16,8 +16,7 @@ public class Main {
                 tempInt = scanner.nextInt();
                 return  tempInt;
             }
-            catch (InputMismatchException ex)
-            {
+            catch (InputMismatchException ex){
                 scanner.nextLine();
             }
         }
