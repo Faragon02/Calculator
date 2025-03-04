@@ -4,6 +4,25 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    static  int inputs(String command, Scanner scanner)
+    {
+        int tempInt;
+        while (true)
+        {
+            try
+            {
+
+                System.out.println(command);
+                tempInt = scanner.nextInt();
+                return  tempInt;
+            }
+            catch (InputMismatchException ex)
+            {
+                scanner.nextLine();
+            }
+        }
+
+    }
     static int add(int input1, int input2){
         int result = 0;
         return  result = input1 + input2;
@@ -21,18 +40,14 @@ public class Main {
 
     static int divide(int input1, int input2){
         int result = 0;
-        try
+        if(input2 != 0)
         {
             result =input1 / input2;
         }
-        catch (ArithmeticException e) {
-
-            System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다 ");
-            result =0;
+        else {
+            throw  new ArithmeticException("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다 ");
         }
-        finally {
-            return result = 0;
-        }
+        return  result;
     }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -45,6 +60,8 @@ public class Main {
 
         boolean start =  true;
         boolean calculateStatue = false;
+
+        String command;
 
         while (start)
         {
@@ -61,33 +78,12 @@ public class Main {
             }
             if(calculateStatue)
             {
-                try
-                {
-                    System.out.println("첫번째 정수를 입렵하세요.");
-                    input1 = scanner.nextInt();
+                command = "첫번째 정수를 입렵하세요.";
+                input1 = inputs(command, scanner);
 
-                }
-                catch (InputMismatchException ex)
-                {
-                    System.out.println("다시 첫번째 정수를 입렵하세요.");
-                    scanner.nextLine();
-                    input1 = scanner.nextInt();
-                }
-
-                try
-                {
-                    System.out.println("두번째 정수를 입렵하세요.");
-                    input2 = scanner.nextInt();
-
-                }
-                catch (InputMismatchException ex)
-                {
-                    System.out.println("다시 두번째 정수를 입렵하세요.");
-                    scanner.nextLine();
-                    input2 = scanner.nextInt();
-
-                }
-
+                command = "두번째 정수를 입렵하세요.";
+                input2 = inputs(command, scanner);
+               
                 switch (operatorType)
                 {
                     case '+':
