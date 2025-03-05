@@ -1,6 +1,7 @@
 package calculator;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Calculator {
 
@@ -25,7 +26,7 @@ public class Calculator {
     }
 
     //setter & Calc!
-    void setDataInput(int input1, char operatorType, int input2)
+    public void setDataInput(int input1, char operatorType, int input2)
     {
         this.input1 = input1;
         this.input2 = input2;
@@ -48,13 +49,12 @@ public class Calculator {
             default:
                 break;
         }
-
          // this next when After Calc
     }
 
 
     //previousDataCallFunction
-    void updatePreviewData()
+    public void updatePreviewData()
     {
         if(previous.size() > maxCount)
         {
@@ -65,16 +65,16 @@ public class Calculator {
         countPreviewData();
     }
 
-    int previousMaxCount() {
+    public  int previousMaxCount() {
         return  maxCount;
     }
-    int countPreviewData()
+    public int countPreviewData()
     {
         previousCount = previous.size();
 
        return previousCount;
     }
-    String callpreviousData(int num)
+    public  String callpreviousData(int num)
     {
         if(num >= previous.size())
         {
@@ -86,7 +86,7 @@ public class Calculator {
         }
         return previous.get(num);
     }
-    String removeData(int inputNum)
+    public String removeData(int inputNum)
     {
         String complte;
         if(inputNum < maxCount)
@@ -102,14 +102,14 @@ public class Calculator {
         return complte;
     }
     //getter
-    int getinput1()
+    public int getinput1()
     {
         return  input1;
     }
-    int getinput2(){
+    public int getinput2(){
         return input2;
     }
-    int getResult(){
+    public int getResult(){
         return result;
     }
 
