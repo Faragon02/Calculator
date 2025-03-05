@@ -3,64 +3,64 @@ package calculator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Previous {
+public class Previous{
 
-    //previewDatacheck
-    private List<String> previous;
+    //previewDataCheck
+    private final List<String> previous;
     private int maxCount;
     private int previousCount;
 
     Previous(int maxCount){
         this.maxCount = maxCount;
         previousCount = 0;
-        previous = new ArrayList<String>();
+        previous = new ArrayList<>();
     }
     //previousDataCallFunction
-    public void setUpdatePreviewData(double input1, char oper , double input2, double result)
+    public void setUpdatePreviewData(String result)
     {
-        if(previous.size() > maxCount)
-        {
-            previous.remove(0);
+        previous.add(result);
+    }
+    public void getReadData(char command) {
+        if (command == 'Y' || command == 'y') {
+            if(previous.size() > maxCount)
+            {
+                previous.remove(0);
+            }
+            System.out.println("총 개수는 "+ maxCount +"개 이상이되면 오래된 것부터 자동 삭제합니다.");
+            System.out.println("총 개수 :" +previousCount + "\n\n");
+            refreshPreviousData();
         }
-        String tempNow = String.format("%.3f %c %.3f = %.3f", input1, oper, input2 , result);
-        previous.add(tempNow);
-        countPreviewData();
     }
-
-    int previousMaxCount() {
-        return  maxCount;
-    }
-    int countPreviewData()
+    public void removeData(int inputNum)
     {
-        previousCount = previous.size();
-
-        return previousCount;
-    }
-    String callpreviousData(int num)
-    {
-        if(num >= previous.size())
-        {
-            num = previousCount;
+        if(inputNum  < 0){
+            return;
         }
-        else if(num < 0)
-        {
-            num = 0;
+        int size =previous.size();
+        if( size == 0){
+            return;
         }
-        return previous.get(num);
-    }
-    String removeData(int inputNum)
-    {
-        String complte;
+        String complite;
         if(inputNum < maxCount)
         {
             previous.remove(inputNum);
-            complte =  "삭제 :" + inputNum + " 번째 삭제 성공\n\n";
+            complite=  "삭제 :" + inputNum + " 번째 삭제 성공\n\n";
         }
         else
         {
-            complte ="삭제 :" +  inputNum + " 번째 삭제 실패\n "
+            complite ="삭제 :" +  inputNum + " 번째 삭제 실패\n "
                     + maxCount + " 보다 크기 입력했습니다.\n\n";
         }
-        return complte;
+        System.out.println(complite);
+        refreshPreviousData();
+    }
+
+    private void refreshPreviousData(){
+        int i =0;
+        for(String s : previous)
+        {
+            System.out.println(i +" 번째 :"+ s);
+            i++;
+        }
     }
 }

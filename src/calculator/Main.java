@@ -37,49 +37,26 @@ public class Main {
                     break;
                 }
             }
-            command = "첫번째 수를 입력하세요";
-            calculator.setInput1( check.checkDouble(command, scanner));
-
-            command = "두번째 수를 입력하세요";
-            calculator.setInput2(check.checkDouble(command, scanner));
             if(calculateStatue)
             {
-                System.out.println("결과 :  " + calculator.getReuslt());
+                command = "첫번째 수를 입력하세요";
+                calculator.setInput1( check.checkDouble(command, scanner));
 
-                previous.setUpdatePreviewData(calculator.getInput1(), calculator.getOperatorType(),
-                        calculator.getInput2(), calculator.getReuslt());
+                command = "두번째 수를 입력하세요";
+                calculator.setInput2(check.checkDouble(command, scanner));
 
-                int countPrevious= previous.countPreviewData();
+                calculator.getCalc();
+                calculator.getOutput();
+                previous.setUpdatePreviewData(calculator.getSaveCalc());
+
                 System.out.println("이전 데이터를 보겠습니까? y/n (Yes/N0)");
                 char tempPreviousCmd1= scanner.next().charAt(0);
                 if(tempPreviousCmd1 == 'y' |tempPreviousCmd1 =='Y')
                 {
-                    System.out.println( String.format("총 개수는 %d개 이상이되면 오래된 것부터 자동 삭제합니다.", previous.previousMaxCount()));
-                    System.out.println("총 개수 : " + previous.countPreviewData() + "\n\n");
-
-                    for(int i = 0; i< countPrevious; i++){
-                        System.out.println( i + " 번째: " + previous.callpreviousData(i));
-                    }
+                    previous.getReadData(tempPreviousCmd1);
                     command = "삭제할 데이터 선택: 정수 숫자 / 없으면 -1";
                     selectInput = check.checkInt(command, scanner);
-
-                    command = "수를 입력하세요 / 없으면 -1";
-                    selectInput = check.checkInt(command, scanner);
-
-                    if( selectInput >=0)
-                    {
-                        System.out.println(previous.removeData(selectInput));
-
-                        countPrevious= previous.countPreviewData();
-                        System.out.println("현재 상태" +  countPrevious);
-                        if(countPrevious >0)
-                        {
-                            for(int i = 0; i< countPrevious; i++){
-                                System.out.println( i + " 번째: " + previous.callpreviousData(i));
-                            }
-                        }
-                    }
-
+                    previous.removeData(selectInput);
                 }
                // System.out.println(calculator.removeData(selectInput) );
             }
@@ -87,6 +64,7 @@ public class Main {
             {
                 System.out.println("존재하지 않는 기능입니다.");
             }
+
             System.out.println("종료 할까요? 종료(q,Q) / 계속(p,P)");
             char exit =scanner.next().charAt(0);
             if (exit == 'q' ||exit == 'Q') {

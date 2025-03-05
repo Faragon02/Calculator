@@ -24,63 +24,55 @@ public class Calculator <T extends Number> {
         this.operatorType = operatorType;
     }
 
-    public double getReuslt (){
+    public void getCalc(){
       switch (operatorType)
       {
           case '+':
-              result = add();
+              result = add(input1, input2);
               break;
           case '-':
-              result = subtract();
+              result = subtract(input1, input2);
               break;
           case '*':
-              result = multiply();
+              result = multiply(input1, input2);
               break;
           case '/':
-              result = divide();
+              result = divide(input1, input2);
               break;
       }
-      return  result;
+        System.out.println("결과 :  " + result);
     }
-    public  double getInput1(){
-        return input1.doubleValue();
+    public  String getSaveCalc(){
+      return  String.format("%.3f %c %.3f = %.3f", input1, operatorType, input2 , result);
     }
-
-    public  double getInput2(){
-        return input2.doubleValue();
-    }
-
-    public void getOnlyResult(){
-        System.out.println("입력1 : " + input1);
-        System.out.println("입력2 : " + input2);
-        System.out.println("결과  : " + result);
-    }
-
-    public char getOperatorType(){
-        return  operatorType;
+    public void getOutput(){
+        System.out.println("입력1   : " + input1);
+        System.out.println("연산기호 : " + operatorType);
+        System.out.println("입력2   : " + input2);
+        System.out.println("결과    : " + result);
     }
 
     //function
-    private <T> double add(){
+    private <T extends Number> double add(T input1, T input2){
         return input1.doubleValue() + input2.doubleValue();
     }
 
-    private <T> double subtract(){
+    private <T extends Number> double subtract(T input1, T input2){
         return input1.doubleValue() - input2.doubleValue();
     }
 
-    private <T> double multiply(){
+    private <T extends Number> double multiply(T input1, T input2){
         return input1.doubleValue() * input2.doubleValue();
     }
 
-    private <T> double divide() {
+    private <T extends Number> double divide(T input1, T input2) {
         double tempResult = 0.0;
         if (input2.doubleValue() != 0) {
 
             tempResult = input1.doubleValue() / input2.doubleValue();
         } else {
             tempResult = 0.0;
-            throw new ArithmeticException("분모가 영이 될수 없습니다.");
+            System.out.println("0으로 나눌수 없습니다.");
         }
         return tempResult;
     }

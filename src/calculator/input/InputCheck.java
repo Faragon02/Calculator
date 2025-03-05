@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class InputCheck {
    public InputCheck(){}
+
    public double checkDouble(String command, Scanner scanner)
     {
         double tempInput;
