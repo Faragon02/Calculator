@@ -41,7 +41,7 @@ public class Previous{
             return;
         }
         String complite;
-        if(inputNum < maxCount)
+        if(inputNum < size)
         {
             previous.remove(inputNum);
             complite=  "삭제 :" + inputNum + " 번째 삭제 성공\n\n";
