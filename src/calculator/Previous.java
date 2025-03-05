@@ -6,12 +6,12 @@ import java.util.List;
 public class Previous {
 
     //previewDatacheck
-    private List<String> previous ;
+    private List<String> previous;
     private int maxCount;
     private int previousCount;
 
-    Previous(){
-        this.maxCount = 5;
+    Previous(int maxCount){
+        this.maxCount = maxCount;
         previousCount = 0;
         previous = new ArrayList<String>();
     }

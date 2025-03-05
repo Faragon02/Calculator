@@ -1,6 +1,7 @@
 package calculator;
 
 public class Calculator <T extends Number> {
+    //number check!
     private T input1;
     private T input2;
     private double result;
@@ -14,8 +15,6 @@ public class Calculator <T extends Number> {
     public void setInput1(T input1){
         this.input1 =input1;
     }
-
-
     public  void setInput2(T input2){
         this.input2 = input2;
     }
@@ -51,8 +50,10 @@ public class Calculator <T extends Number> {
         return input2.doubleValue();
     }
 
-    public  double getOnlyResult(){
-        return result;
+    public void getOnlyResult(){
+        System.out.println("입력1 : " + input1);
+        System.out.println("입력2 : " + input2);
+        System.out.println("결과  : " + result);
     }
 
     public char getOperatorType(){
@@ -60,19 +61,19 @@ public class Calculator <T extends Number> {
     }
 
     //function
-    private  <T extends Number> double add(){
+    private <T> double add(){
         return input1.doubleValue() + input2.doubleValue();
     }
 
-    private  <T extends Number> double subtract(){
+    private <T> double subtract(){
         return input1.doubleValue() - input2.doubleValue();
     }
 
-    private  <T extends Number> double multiply(){
+    private <T> double multiply(){
         return input1.doubleValue() * input2.doubleValue();
     }
 
-    private  <T extends Number> double divide() {
+    private <T> double divide() {
         double tempResult = 0.0;
         if (input2.doubleValue() != 0) {
 

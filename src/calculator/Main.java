@@ -1,35 +1,18 @@
 package calculator;
 
+import calculator.input.InputCheck;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
-
-    static double check(String command, Scanner scanner)
-    {
-        double tempInput;
-        while (true)
-        {
-            try
-            {
-                System.out.println(command);
-                tempInput = scanner.nextDouble();
-                return  tempInput;
-            }
-            catch (InputMismatchException ex){
-                System.out.println("[Exception] 숫자를 입력하세요");
-                scanner.nextLine();
-            }
-        }
-
-    }
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
         Calculator<Double> calculator = new Calculator<>();
-        Previous previous = new Previous();
+        Previous previous = new Previous(5);
+        InputCheck check = new InputCheck();
 
         int selectInput;
         String command;
@@ -55,21 +38,16 @@ public class Main {
                 }
             }
             command = "첫번째 수를 입력하세요";
-            calculator.setInput1(check(command, scanner));
+            calculator.setInput1( check.checkDouble(command, scanner));
 
             command = "두번째 수를 입력하세요";
-            calculator.setInput2(check(command, scanner));
+            calculator.setInput2(check.checkDouble(command, scanner));
             if(calculateStatue)
             {
                 System.out.println("결과 :  " + calculator.getReuslt());
 
                 previous.setUpdatePreviewData(calculator.getInput1(), calculator.getOperatorType(),
                         calculator.getInput2(), calculator.getReuslt());
-
-                System.out.println("입력1 : " + calculator.getInput1());
-                System.out.println("입력2 : " + calculator.getInput2());
-                System.out.println("결과  :  " + calculator.getOnlyResult());
-
 
                 int countPrevious= previous.countPreviewData();
                 System.out.println("이전 데이터를 보겠습니까? y/n (Yes/N0)");
@@ -82,36 +60,28 @@ public class Main {
                     for(int i = 0; i< countPrevious; i++){
                         System.out.println( i + " 번째: " + previous.callpreviousData(i));
                     }
+                    command = "삭제할 데이터 선택: 정수 숫자 / 없으면 -1";
+                    selectInput = check.checkInt(command, scanner);
+
+                    command = "수를 입력하세요 / 없으면 -1";
+                    selectInput = check.checkInt(command, scanner);
+
+                    if( selectInput >=0)
+                    {
+                        System.out.println(previous.removeData(selectInput));
+
+                        countPrevious= previous.countPreviewData();
+                        System.out.println("현재 상태" +  countPrevious);
+                        if(countPrevious >0)
+                        {
+                            for(int i = 0; i< countPrevious; i++){
+                                System.out.println( i + " 번째: " + previous.callpreviousData(i));
+                            }
+                        }
+                    }
+
                 }
                // System.out.println(calculator.removeData(selectInput) );
-                try
-                {
-                    System.out.println("삭제할 데이터 선택: 정수 숫자 / 없으면 -1");
-                    selectInput = scanner.nextInt();
-                }
-                catch (InputMismatchException ex)
-                {
-                    System.out.println("재입력 해주세요.");
-                    scanner.nextLine();
-                    selectInput = scanner.nextInt();
-                }
-
-                command = "수를 입력하세요 / 없으면 -1";
-                selectInput = (int)check(command, scanner);
-
-                if( selectInput >=0)
-                {
-                    System.out.println(previous.removeData(selectInput));
-
-                    countPrevious= previous.countPreviewData();
-                    System.out.println("현재 상태" +  countPrevious);
-                    if(countPrevious >0)
-                    {
-                        for(int i = 0; i< countPrevious; i++){
-                            System.out.println( i + " 번째: " + previous.callpreviousData(i));
-                        }
-                   }
-                }
             }
             else
             {
