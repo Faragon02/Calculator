@@ -20,7 +20,7 @@ public class Main {
         char operatorType;
         char[] operatorTypes = {'+','-','*','/'};
 
-        boolean start =  true;git s
+        boolean start =  true;
         boolean calculateStatue = false;
 
         while (start)
