@@ -12,8 +12,8 @@ public class Previous{
 
     Previous(int maxCount){
         this.maxCount = maxCount;
-        previousCount = 0;
-        previous = new ArrayList<>();
+        this.previousCount = 0;
+        this.previous = new ArrayList<>();
     }
     //previousDataCallFunction
     public void setUpdatePreviewData(String result)

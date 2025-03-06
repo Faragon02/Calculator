@@ -20,7 +20,7 @@ public class Main {
         char operatorType;
         char[] operatorTypes = {'+','-','*','/'};
 
-        boolean start =  true;
+        boolean start =  true;git s
         boolean calculateStatue = false;
 
         while (start)
@@ -58,7 +58,7 @@ public class Main {
                     selectInput = check.checkInt(command, scanner);
                     previous.removeData(selectInput);
                 }
-               // System.out.println(calculator.removeData(selectInput) );
+               // System.out.println(calculator.removeData(selectInput)a
             }
             else
             {

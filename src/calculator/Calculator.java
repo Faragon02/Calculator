@@ -28,7 +28,7 @@ public class Calculator <T extends Number> {
       switch (operatorType)
       {
           case '+':
-              result = add(input1, input2);
+              result = add(input1, input2) ;
               break;
           case '-':
               result = subtract(input1, input2);
